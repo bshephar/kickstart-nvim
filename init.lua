@@ -861,6 +861,7 @@ require('lazy').setup({
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
           ['<C-Space>'] = cmp.mapping.complete {},
+          ['<CR>'] = cmp.mapping.confirm { select = true },
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -1004,6 +1005,8 @@ require('lazy').setup({
   require 'custom.theme',
   require 'custom.plugins.neogit',
   require 'custom.snacks',
+  require 'custom.plugins.blink',
+  require 'custom.plugins.hover',
   --  require 'custom.plugins.nvim-dap',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`

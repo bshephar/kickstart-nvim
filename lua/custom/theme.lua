@@ -22,4 +22,15 @@ return {
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
+	{
+		"nvim-lualine/lualine.nvim",
+		-- Lualine doesn't need to load before others, so no priority is set.
+		config = function()
+			require("lualine").setup({
+				options = {
+					theme = "ayu",
+				},
+			})
+		end,
+	},
 }

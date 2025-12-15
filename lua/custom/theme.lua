@@ -6,6 +6,9 @@ return {
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
 		"Shatur/neovim-ayu",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
+		config = function(_, opts)
+			require("ayu").setup(opts)
+		end,
 		opts = {
 			transparent = true,
 			styles = {

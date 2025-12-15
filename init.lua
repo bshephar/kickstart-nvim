@@ -1012,7 +1012,7 @@ require("lazy").setup({
 	require("custom.snacks"),
 	require("custom.plugins.blink"),
 	require("custom.plugins.hover"),
-	require("custom.plugins.ollama"),
+	require("custom.plugins.sidekick"),
 	--  require 'custom.plugins.nvim-dap',
 
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`

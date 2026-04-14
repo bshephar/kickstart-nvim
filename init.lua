@@ -366,7 +366,6 @@ require("lazy").setup({
 
 	-- Telescope removed in favor of Snacks Picker
 
-
 	-- LSP Plugins
 	{
 		-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -529,7 +528,7 @@ require("lazy").setup({
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			-- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-            capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -688,7 +687,6 @@ require("lazy").setup({
 
 	-- nvim-cmp removed in favor of blink.cmp
 
-
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
@@ -727,8 +725,18 @@ require("lazy").setup({
 			-- cursor location to LINE:COLUMN
 			---@diagnostic disable-next-line: duplicate-set-field
 			statusline.section_location = function()
-				return "%2l:%-2v"
+				return "%2l:%-2v | " .. os.date("%H:%M")
 			end
+
+			-- Refresh statusline every 60 seconds so the clock stays current
+			local timer = vim.uv.new_timer()
+			timer:start(
+				0,
+				60000,
+				vim.schedule_wrap(function()
+					vim.cmd("redrawstatus")
+				end)
+			)
 
 			-- ... and there is more!
 			--  Check out: https://github.com/echasnovski/mini.nvim
@@ -737,7 +745,6 @@ require("lazy").setup({
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
 			ensure_installed = {
@@ -757,16 +764,7 @@ require("lazy").setup({
 				"yaml",
 				"python",
 			},
-			-- Autoinstall languages that are not installed
 			auto_install = true,
-			highlight = {
-				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
 		},
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -798,6 +796,8 @@ require("lazy").setup({
 	require("custom.plugins.blink"),
 	require("custom.plugins.hover"),
 	require("custom.plugins.sidekick"),
+	require("custom.plugins.ollama"),
+	require("custom.plugins.treesitter-context"),
 	--  require 'custom.plugins.nvim-dap',
 
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
